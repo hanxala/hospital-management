@@ -1,0 +1,21 @@
+# Target build files
+target/
+*.class
+
+# Log files
+*.log
+
+# Package Files #
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Virtual Machine Crash Logs
+hs_err_pid*
+replay_pid*
+
+# OS generated files
+.DS_Store
+Thumbs.db

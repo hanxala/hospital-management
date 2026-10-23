@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hospital Billing & Patient Management System - Technical & User Documentation</title>
+<style>
+    @page {
+        size: A4;
+        margin: 18mm 16mm 18mm 16mm;
+        @bottom-right {
+            content: "Page " counter(page);
+            font-size: 8pt;
+            color: #64748b;
+        }
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+        color: #1e293b;
+        line-height: 1.55;
+        font-size: 10pt;
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
+    }
+
+    /* Cover Page */
+    .cover-page {
+        page-break-after: always;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 40px 20px 20px 20px;
+    }
+
+    .cover-top {
+        border-top: 6px solid #1a56db;
+        padding-top: 30px;
+    }
+
+    .cover-badge {
+        display: inline-block;
+        background: #eff6ff;
+        color: #1d4ed8;
+        font-size: 9pt;
+        font-weight: 700;
+        padding: 6px 14px;
+        border-radius: 20px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        border: 1px solid #bfdbfe;
+        margin-bottom: 20px;
+    }
+
+    .cover-title {
+        font-size: 28pt;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.15;
+        margin: 0 0 15px 0;
+        letter-spacing: -0.5px;
+    }
+
+    .cover-subtitle {
+        font-size: 13pt;
+        font-weight: 400;
+        color: #475569;
+        margin: 0 0 30px 0;
+        line-height: 1.4;
+    }
+
+    .cover-meta-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 24px;
+        margin-top: 30px;
+    }
+
+    .meta-item h4 {
+        margin: 0 0 4px 0;
+        font-size: 8pt;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #64748b;
+        font-weight: 700;
+    }
+
+    .meta-item p {
+        margin: 0;
+        font-size: 10pt;
+        font-weight: 600;
+        color: #0f172a;
+    }
+
+    .cover-bottom {
+        border-top: 1px solid #e2e8f0;
+        padding-top: 20px;
+        font-size: 8.5pt;
+        color: #64748b;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Headings */
+    h1 {
+        font-size: 18pt;
+        font-weight: 800;
+        color: #0f2b48;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 8px;
+        margin-top: 28px;
+        margin-bottom: 14px;
+        page-break-after: avoid;
+    }
+
+    h2 {
+        font-size: 13pt;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin-top: 22px;
+        margin-bottom: 10px;
+        page-break-after: avoid;
+    }
+
+    h3 {
+        font-size: 11pt;
+        font-weight: 600;
+        color: #0f172a;
+        margin-top: 16px;
+        margin-bottom: 8px;
+        page-break-after: avoid;
+    }
+
+    p {
+        margin-top: 0;
+        margin-bottom: 10px;
+        text-align: justify;
+    }
+
+    .page-break {
+        page-break-before: always;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 14px 0 18px 0;
+        font-size: 8.5pt;
+        page-break-inside: avoid;
+    }
+
+    th, td {
+        padding: 7px 10px;
+        border: 1px solid #cbd5e1;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    th {
+        background-color: #f1f5f9;
+        color: #0f172a;
+        font-weight: 700;
+        font-size: 8pt;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+    }
+
+    tr:nth-child(even) td {
+        background-color: #f8fafc;
+    }
+
+    /* Callout Boxes */
+    .callout {
+        border-radius: 8px;
+        padding: 12px 16px;
+        margin: 14px 0;
+        font-size: 9pt;
+        border-left: 4px solid #3b82f6;
+        background-color: #eff6ff;
+        color: #1e3a8a;
+        page-break-inside: avoid;
+    }
+
+    .callout-success {
+        border-left-color: #10b981;
+        background-color: #ecfdf5;
+        color: #065f46;
+    }
+
+    .callout-warning {
+        border-left-color: #f59e0b;
+        background-color: #fffbeb;
+        color: #92400e;
+    }
+
+    .callout-title {
+        font-weight: 700;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    /* Code blocks */
+    pre {
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 12px 14px;
+        border-radius: 6px;
+        font-family: 'Consolas', 'Courier New', monospace;
+        font-size: 8pt;
+        overflow-x: auto;
+        line-height: 1.45;
+        margin: 10px 0 14px 0;
+        page-break-inside: avoid;
+    }
+
+    code {
+        font-family: 'Consolas', 'Courier New', monospace;
+        font-size: 8.5pt;
+        background: #f1f5f9;
+        color: #0f172a;
+        padding: 1px 4px;
+        border-radius: 4px;
+        border: 1px solid #e2e8f0;
+    }
+
+    pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+        border: none;
+    }
+
+    /* Step Badge */
+    .step-badge {
+        display: inline-block;
+        background: #1e3a8a;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 8pt;
+        padding: 2px 8px;
+        border-radius: 12px;
+        margin-right: 6px;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 2px 7px;
+        font-size: 7.5pt;
+        font-weight: 600;
+        border-radius: 4px;
+        text-transform: uppercase;
+    }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-amber { background: #fef3c7; color: #92400e; }
+
+    /* TOC */
+    .toc-container {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 18px 24px;
+        margin: 20px 0;
+    }
+
+    .toc-list {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .toc-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 0;
+        border-bottom: 1px dotted #cbd5e1;
+        font-size: 9pt;
+    }
+
+    .toc-item:last-child {
+        border-bottom: none;
+    }
+
+    .toc-title {
+        font-weight: 600;
+        color: #1e3a8a;
+    }
+
+    .toc-dots {
+        flex-grow: 1;
+        border-bottom: 1px dotted #94a3b8;
+        margin: 0 10px 4px 10px;
+    }
+
+    .toc-page {
+        color: #64748b;
+        font-weight: 700;
+    }
+
+    /* Diagram Boxes */
+    .diagram-box {
+        background: #ffffff;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 16px;
+        margin: 16px 0;
+        text-align: center;
+        page-break-inside: avoid;
+    }
+
+    .diagram-flow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+    .diagram-step {
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        padding: 10px 8px;
+        flex: 1;
+        text-align: center;
+    }
+
+    .diagram-step h5 {
+        margin: 0 0 4px 0;
+        font-size: 8.5pt;
+        color: #0f172a;
+    }
+
+    .diagram-step p {
+        margin: 0;
+        font-size: 7pt;
+        color: #64748b;
+        text-align: center;
+    }
+
+    .diagram-arrow {
+        color: #3b82f6;
+        font-size: 14pt;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover-page">
+    <div class="cover-top">
+        <div class="cover-badge">COMPREHENSIVE PROJECT DOCUMENTATION & USER MANUAL</div>
+        <h1 class="cover-title">Hospital Billing and Patient Management System</h1>
+        <p class="cover-subtitle">
+            An integrated, enterprise web application engineered with Spring Boot 3, JSP/JSTL, Spring JDBC persistence, and Spring AOP for operational auditing and service latency monitoring.
+        </p>
+
+        <div class="cover-meta-grid">
+            <div class="meta-item">
+                <h4>Application Framework</h4>
+                <p>Spring Boot 3.3.4 (Java 17 LTS)</p>
+            </div>
+            <div class="meta-item">
+                <h4>Database & Persistence</h4>
+                <p>Spring JDBC (JdbcTemplate) + H2 Engine</p>
+            </div>
+            <div class="meta-item">
+                <h4>Cross-Cutting Aspects</h4>
+                <p>Spring AOP (AspectJ Auto-Proxy)</p>
+            </div>
+            <div class="meta-item">
+                <h4>User Interface</h4>
+                <p>JSP, JSTL 6, Bootstrap 5 & Print CSS</p>
+            </div>
+            <div class="meta-item">
+                <h4>Target IDE & Workspace</h4>
+                <p>Eclipse IDE (D:\MCA\java-practical\java-mini)</p>
+            </div>
+            <div class="meta-item">
+                <h4>Build & Verification</h4>
+                <p>Apache Maven 3.9.6 (Build Success)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cover-bottom">
+        <div><strong>Organization:</strong> LifeCare Multi-Speciality Hospital &amp; Research Institute</div>
+        <div><strong>Academic Level:</strong> MCA Practical Mini-Project (Java)</div>
+        <div><strong>Status:</strong> Production Ready (WAR Package Generated)</div>
+    </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="page-break"></div>
+<h1>Table of Contents</h1>
+<div class="toc-container">
+    <ul class="toc-list">
+        <li class="toc-item"><span class="toc-title">1. Executive Summary & Problem Definition</span><span class="toc-dots"></span><span class="toc-page">Page 2</span></li>
+        <li class="toc-item"><span class="toc-title">2. Architectural Overview & System Design</span><span class="toc-dots"></span><span class="toc-page">Page 3</span></li>
+        <li class="toc-item"><span class="toc-title">3. Spring AOP (Aspect-Oriented Programming) in Depth</span><span class="toc-dots"></span><span class="toc-page">Page 4</span></li>
+        <li class="toc-item"><span class="toc-title">4. Spring JDBC Data Access & Database Schema</span><span class="toc-dots"></span><span class="toc-page">Page 5</span></li>
+        <li class="toc-item"><span class="toc-title">5. Core Functional Modules & Business Logic</span><span class="toc-dots"></span><span class="toc-page">Page 6</span></li>
+        <li class="toc-item"><span class="toc-title">6. Complete Step-by-Step User Guide (How to Use Every Feature)</span><span class="toc-dots"></span><span class="toc-page">Page 7</span></li>
+        <li class="toc-item"><span class="toc-title">7. Eclipse IDE Setup, Import & Execution Manual</span><span class="toc-dots"></span><span class="toc-page">Page 8</span></li>
+        <li class="toc-item"><span class="toc-title">8. Verification, Testing & Quality Assurance Report</span><span class="toc-dots"></span><span class="toc-page">Page 9</span></li>
+    </ul>
+</div>
+
+<h1>1. Executive Summary & Problem Definition</h1>
+
+<h2>1.1 Background & Industry Challenges</h2>
+<p>
+Modern healthcare facilities operate in high-pressure environments where medical outpatient encounters, clinical diagnostic testing, inpatient care, and financial accounting occur simultaneously across multiple departments. In legacy healthcare software, several critical bottlenecks frequently arise:
+</p>
+<ul>
+    <li><strong>Fragmented Billing Streams:</strong> Doctor consultation fees and laboratory investigation tariffs are often tracked in separate ledgers, leading to unbilled services, delayed revenue recovery, and invoicing disputes.</li>
+    <li><strong>Lack of Non-Intrusive Audit Trails:</strong> Financial transactions, billing revisions, and payment recordings must adhere to healthcare compliance standards. Hardcoding audit logic inside business methods pollutes business code and creates maintenance overhead.</li>
+    <li><strong>Unmonitored Service Latencies:</strong> Slow database queries or unoptimized service operations degrade clinical response times. Systems require non-invasive latency monitoring to isolate performance bottlenecks.</li>
+</ul>
+
+<h2>1.2 Proposed Integrated Solution</h2>
+<p>
+The <strong>Hospital Billing and Patient Management System</strong> is an integrated web-based solution that solves these challenges through clean architectural decoupling:
+</p>
+<ul>
+    <li><strong>Unified Patient Health Records (EHR):</strong> Centralized registration providing auto-generated Unique Health IDs (UHID) and a 360-degree profile aggregating consultations, lab orders, and invoices.</li>
+    <li><strong>Automated Consolidated Billing:</strong> Automatically gathers unbilled consultations, pending lab investigations, and room/bed charges into a consolidated itemized invoice with dynamic real-time tax and discount recalculation.</li>
+    <li><strong>Non-Intrusive Spring AOP:</strong> Decouples cross-cutting operational logging (<code>BillingAuditAspect</code>) and service latency monitoring (<code>ServicePerformanceAspect</code>) from domain business logic.</li>
+    <li><strong>Native Spring JDBC Persistence:</strong> Utilizes <code>JdbcTemplate</code> for parameterized queries, safe relational joins, and high-performance SQL execution on an embedded H2 engine.</li>
+    <li><strong>Zero-Config Eclipse IDE Compatibility:</strong> Pre-configured with native Eclipse descriptors (<code>.project</code>, <code>.classpath</code>, <code>.settings/</code>) for instant importing and execution.</li>
+</ul>
+
+<!-- ARCHITECTURE SECTION -->
+<div class="page-break"></div>
+<h1>2. Architectural Overview & System Design</h1>
+
+<h2>2.1 Multi-Tier Layered Architecture</h2>
+<p>
+The application adheres strictly to the classic multi-tier enterprise architecture. Each layer maintains a single responsibility, communicating solely with its immediate adjacent layer.
+</p>
+
+<div class="diagram-box">
+    <div style="font-weight: 700; color: #1e3a8a; font-size: 9pt; margin-bottom: 8px;">INTEGRATED HOSPITAL MANAGEMENT ARCHITECTURAL LAYERS</div>
+    <div class="diagram-flow">
+        <div class="diagram-step">
+            <h5>1. Presentation</h5>
+            <p>JSP, JSTL 6, Bootstrap 5, FontAwesome, Print CSS</p>
+        </div>
+        <div class="diagram-arrow">&rarr;</div>
+        <div class="diagram-step">
+            <h5>2. Web Controller</h5>
+            <p>Spring MVC (@Controller, @GetMapping, @PostMapping)</p>
+        </div>
+        <div class="diagram-arrow">&rarr;</div>
+        <div class="diagram-step" style="border: 2px solid #f59e0b; background: #fffbeb;">
+            <h5>3. Cross-Cutting AOP</h5>
+            <p>@Aspect, @AfterReturning, @Around, StopWatch</p>
+        </div>
+        <div class="diagram-arrow">&rarr;</div>
+        <div class="diagram-step">
+            <h5>4. Service Layer</h5>
+            <p>Patient, Consultation, Lab, Billing, Monitoring</p>
+        </div>
+        <div class="diagram-arrow">&rarr;</div>
+        <div class="diagram-step">
+            <h5>5. Spring JDBC DAO</h5>
+            <p>JdbcTemplate, KeyHolder, RowMapper</p>
+        </div>
+        <div class="diagram-arrow">&rarr;</div>
+        <div class="diagram-step">
+            <h5>6. Database Engine</h5>
+            <p>H2 In-Memory / File Engine (schema.sql, data.sql)</p>
+        </div>
+    </div>
+</div>
+
+<h2>2.2 Component Interaction & Data Flow</h2>
+<p>
+When a billing event occurs (e.g., generating an invoice or processing a payment settlement), the interaction sequence executes seamlessly:
+</p>
+<ol>
+    <li>The cashier or administrator submits the billing form via <strong>JSP UI</strong>.</li>
+    <li><code>BillingController</code> receives the model attributes and invokes <code>BillingService.generateBill(bill)</code>.</li>
+    <li>Before/During execution, <strong>Spring AOP</strong>'s <code>ServicePerformanceAspect</code> starts a high-precision timer wrapping the invocation via <code>ProceedingJoinPoint</code>.</li>
+    <li><code>BillingServiceImpl</code> computes financials, writes to <code>bills</code> and <code>bill_items</code> using <code>BillingDao</code>, and marks associated consultation and lab orders as <code>BILLED</code>.</li>
+    <li>Upon successful return, <code>BillingAuditAspect</code> intercepts the returned <code>Bill</code> object, writes structured log output, and persists an immutable audit entry to table <code>audit_logs</code> via Spring JDBC.</li>
+    <li><code>ServicePerformanceAspect</code> completes timing, evaluates if execution exceeded threshold (e.g. 20ms), and writes execution telemetry to <code>performance_logs</code>.</li>
+    <li>The controller redirects to the printable tax invoice view with flash status messages.</li>
+</ol>
+
+<!-- SPRING AOP SECTION -->
+<div class="page-break"></div>
+<h1>3. Spring AOP (Aspect-Oriented Programming) in Depth</h1>
+
+<h2>3.1 Cross-Cutting Concerns in Healthcare Software</h2>
+<p>
+In enterprise software development, cross-cutting concerns are functionalities that span across multiple application layers—such as transaction management, security authorization, auditing, and execution metrics. Traditional object-oriented programming tends to scatter these concerns across business methods, resulting in code tangling and tight coupling.
+<strong>Spring AOP</strong> cleanly extracts these concerns into reusable, non-intrusive <code>@Aspect</code> components.
+</p>
+
+<h2>3.2 Aspect 1: Billing Operational Audit Aspect (<code>BillingAuditAspect.java</code>)</h2>
+<p>
+Every billing transaction—including invoice creation and partial or full payment collections—must maintain an indisputable audit trail. The <code>BillingAuditAspect</code> intercepts these specific business methods without modifying a single line of business code.
+</p>
+
+<div class="callout">
+    <div class="callout-title">Billing Audit Pointcut &amp; Advice Implementation</div>
+<pre><code>@Aspect
+@Component
+public class BillingAuditAspect {
+    private final MonitoringService monitoringService;
+
+    @Pointcut("execution(* com.hospital.service.BillingService.generateBill(..))")
+    public void billGenerationPointcut() {}
+
+    @Pointcut("execution(* com.hospital.service.BillingService.processPayment(..))")
+    public void paymentProcessingPointcut() {}
+
+    @AfterReturning(pointcut = "billGenerationPointcut()", returning = "result")
+    public void auditBillGeneration(JoinPoint joinPoint, Object result) {
+        if (result instanceof Bill bill) {
+            String details = String.format(
+                "Generated Invoice [%s] for Patient UHID: %s (%s). Total: Rs. %s, Paid: Rs. %s, Balance: Rs. %s",
+                bill.getBillNumber(), bill.getPatientUhid(), bill.getPatientName(),
+                bill.getTotalAmount(), bill.getPaidAmount(), bill.getBalanceAmount()
+            );
+            log.info("[AOP AUDIT] >>> BILLING OPERATION: BILL_GENERATED | {}", details);
+            monitoringService.logAuditEvent("BILL_GENERATED", "BILL", bill.getBillNumber(), details, "BILLING_DESK");
+        }
+    }
+}</code></pre>
+</div>
+
+<h2>3.3 Aspect 2: Service Latency Performance Monitor (<code>ServicePerformanceAspect.java</code>)</h2>
+<p>
+To prevent medical desk latency, the performance aspect surrounds all methods in <code>com.hospital.service</code> using <code>@Around</code> advice. To prevent infinite recursion, the pointcut explicitly excludes the <code>MonitoringService</code> itself.
+</p>
+
+<div class="callout callout-warning">
+    <div class="callout-title">Service Execution Time Pointcut &amp; Latency Threshold</div>
+<pre><code>@Aspect
+@Component
+public class ServicePerformanceAspect {
+    @Value("${hospital.performance.threshold-ms:20}")
+    private long thresholdMs;
+
+    @Pointcut("execution(* com.hospital.service..*(..)) && !execution(* com.hospital.service.MonitoringService..*(..))")
+    public void monitoredServiceMethods() {}
+
+    @Around("monitoredServiceMethods()")
+    public Object monitorExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+        long startTime = System.currentTimeMillis();
+        Object result = joinPoint.proceed();
+        long duration = System.currentTimeMillis() - startTime;
+        boolean exceeded = duration > thresholdMs;
+
+        if (exceeded) {
+            log.warn("[AOP MONITOR] SLOW SERVICE ALERT: {}.{} executed in {} ms (Threshold: {} ms)",
+                     joinPoint.getTarget().getClass().getSimpleName(), joinPoint.getSignature().getName(), duration, thresholdMs);
+        }
+        monitoringService.recordExecutionMetric(joinPoint.getTarget().getClass().getSimpleName(),
+                                                joinPoint.getSignature().getName(), duration, exceeded);
+        return result;
+    }
+}</code></pre>
+</div>
+
+<!-- SPRING JDBC & DATABASE SECTION -->
+<div class="page-break"></div>
+<h1>4. Spring JDBC Data Access &amp; Database Schema</h1>
+
+<h2>4.1 Data Access Object (DAO) Pattern with Spring JDBC</h2>
+<p>
+The application utilizes <strong>Spring JDBC (<code>JdbcTemplate</code>)</strong> rather than heavyweight ORM frameworks. This provides several benefits:
+</p>
+<ul>
+    <li><strong>Predictable Query Performance:</strong> Direct control over SQL execution plans, index utilization, and elimination of N+1 select queries.</li>
+    <li><strong>Multi-Table Relational Joins:</strong> Clean projection of patient demographics and doctor specializations directly onto consultation, lab order, and billing model classes.</li>
+    <li><strong>Safe Key Generation:</strong> Using <code>GeneratedKeyHolder</code> with explicit column constraints (<code>new String[]{"id"}</code>) ensuring portability across H2, MySQL, and PostgreSQL engines.</li>
+</ul>
+
+<h2>4.2 Relational Database Schema Overview</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Table Name</th>
+            <th>Primary Key</th>
+            <th>Key Foreign Keys</th>
+            <th>Description &amp; Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>patients</code></td>
+            <td><code>id (BIGINT)</code></td>
+            <td>Unique <code>patient_uhid</code></td>
+            <td>Stores patient demographic, contact, blood group, and medical history.</td>
+        </tr>
+        <tr>
+            <td><code>doctors</code></td>
+            <td><code>id (BIGINT)</code></td>
+            <td>None</td>
+            <td>Master list of specialist doctors, departments, and consultation fees.</td>
+        </tr>
+        <tr>
+            <td><code>consultations</code></td>
+            <td><code>id (BIGINT)</code></td>
+            <td><code>patient_id</code>, <code>doctor_id</code></td>
+            <td>Records symptoms, doctor diagnosis, prescriptions, and billing status.</td>
+        </tr>
+        <tr>
+            <td><code>lab_catalog</code></td>
+            <td><code>id (BIGINT)</code></td>
+            <td>Unique <code>test_code</code></td>
+            <td>Master hospital diagnostic catalog (test name, department, standard tariff).</td>
+        </tr>
+        <tr>
+            <td><code>lab_orders</code></td>
+            <td><code>id (BIGINT)</code></td>
+            <td><code>patient_id</code>, <code>test_id</code>, <code>doctor_id</code></td>
+            <td>Tracks diagnostic orders, lab charges, specimen status, and results.</td>
+        </tr>
+        <tr>
+            <td><code>bills</code></td>
+            <td><code>id (BIGINT)</code></td>
+            <td><code>patient_id</code>, Unique <code>bill_number</code></td>
+            <td>Consolidated tax invoice header, itemized subtotal, discounts, taxes, and balance.</td>
+        </tr>
+        <tr>
+            <td><code>bill_items</code></td>
+            <td><code>id (BIGINT)</code></td>
+            <td><code>bill_id</code> (CASCADE)</td>
+            <td>Line-item breakdown of individual consultations, lab investigations, and services.</td>
+        </tr>
+        <tr>
+            <td><code>audit_logs</code></td>
+            <td><code>id (BIGINT)</code></td>
+            <td>None</td>
+            <td>Populated exclusively via <strong>Spring AOP</strong> to audit billing operations.</td>
+        </tr>
+        <tr>
+            <td><code>performance_logs</code></td>
+            <td><code>id (BIGINT)</code></td>
+            <td>None</td>
+            <td>Populated exclusively via <strong>Spring AOP</strong> to track service latency metrics.</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- CORE MODULES SECTION -->
+<div class="page-break"></div>
+<h1>5. Core Functional Modules &amp; Business Logic</h1>
+
+<h2>5.1 Patient Registration &amp; 360-Degree Profile (EHR)</h2>
+<p>
+Patients receive a standardized Unique Health Identifier (UHID) formatted sequentially as <code>UHID-1001</code>, <code>UHID-1002</code>, etc. The <strong>Patient Profile (<code>patient-view.jsp</code>)</strong> serves as a single source of truth for the patient's entire hospital lifecycle, presenting chronological doctor visits, laboratory investigations, and billing invoices on a single screen.
+</p>
+
+<h2>5.2 Doctor Consultations</h2>
+<p>
+When scheduling a consultation, staff select a patient and an attending doctor. The doctor's standard consultation fee is automatically retrieved from the database and bound to the consultation record. Clinicians record chief complaints/symptoms, provisional diagnosis, digital prescriptions, and internal advice. The consultation remains in <code>COMPLETED</code> status until billed.
+</p>
+
+<h2>5.3 Diagnostic Laboratory Investigations</h2>
+<p>
+The laboratory module connects clinical diagnosis with diagnostic investigations. Features include:
+</p>
+<ul>
+    <li><strong>Master Tariff Catalog:</strong> Pre-seeded with CBC, Lipid Profile, Chest X-Ray, Fasting Blood Sugar, Liver Function Test (LFT), Urine Routine, and Brain MRI.</li>
+    <li><strong>Order Workflow:</strong> Staff order tests with automatic tariff assignment. Tests begin in <code>PENDING</code> status.</li>
+    <li><strong>Result Recording:</strong> Lab technicians enter clinical findings via an interactive modal dialog, transitioning the order to <code>COMPLETED</code>.</li>
+</ul>
+
+<h2>5.4 Integrated Itemized Billing &amp; Invoicing Desk</h2>
+<p>
+The billing engine eliminates duplicate billing entry through its automated draft builder:
+</p>
+<ol>
+    <li><strong>Automatic Discovery:</strong> Queries all unbilled consultations (<code>status = 'COMPLETED'</code>) and unbilled laboratory orders for the designated patient.</li>
+    <li><strong>Line-Item Synthesis:</strong> Creates itemized <code>BillItem</code> rows with item descriptions, unit rates, and totals.</li>
+    <li><strong>Financial Calculations:</strong>
+        <br>$$	ext{Subtotal} = 	ext{Consultation Charges} + 	ext{Lab Charges} + 	ext{Room Charges} + 	ext{Pharmacy Charges} + 	ext{Other Charges}$$
+        <br>$$	ext{Discount Amount} = 	ext{Subtotal} 	imes \left(rac{	ext{Discount } \%}{100}ight)$$
+        <br>$$	ext{Taxable Subtotal} = 	ext{Subtotal} - 	ext{Discount Amount}$$
+        <br>$$	ext{GST Tax Amount} = 	ext{Taxable Subtotal} 	imes \left(rac{	ext{Tax } \%}{100}ight)$$
+        <br>$$	ext{Total Net Payable} = 	ext{Taxable Subtotal} + 	ext{GST Tax Amount}$$
+        <br>$$	ext{Outstanding Balance} = 	ext{Total Net Payable} - 	ext{Amount Paid}$$
+    </li>
+    <li><strong>Status Lifecycle:</strong> Automatically sets payment status to <code>PAID</code> (if balance = 0), <code>PARTIAL</code> (if partial deposit received), or <code>UNPAID</code>.</li>
+    <li><strong>Clinical Status Transition:</strong> In the same database transaction, marks all involved consultations and lab orders as <code>BILLED</code> to prevent duplicate invoicing.</li>
+</ol>
+
+<!-- USER GUIDE SECTION -->
+<div class="page-break"></div>
+<h1>6. Complete Step-by-Step User Guide</h1>
+
+<h2>6.1 Navigating the Executive Medical Dashboard</h2>
+<p>
+Access the root URL: <code>http://localhost:8080/</code> or <code>http://localhost:8080/dashboard</code>.
+</p>
+<ul>
+    <li><strong>Metric Cards:</strong> Review real-time counts of Total Patients, Today's Consultations, Revenue Realized (₹), and Pending Receivables.</li>
+    <li><strong>Quick Action Shortcuts:</strong> Click buttons for <em>Register Patient</em>, <em>Doctor Consultation</em>, <em>Laboratory Orders</em>, or <em>AOP Monitor</em>.</li>
+    <li><strong>Live Invoices &amp; AOP Feed:</strong> The left panel displays the latest hospital invoices, while the right panel displays live AOP audit events captured in real time.</li>
+</ul>
+
+<h2>6.2 How to Register a New Patient</h2>
+<ol>
+    <li>Navigate to <strong>Patients</strong> &rarr; Click <strong><span class="step-badge">1</span> Register New Patient</strong> (or visit <code>/patients/register</code>).</li>
+    <li>The system displays an auto-generated UHID (e.g., <code>UHID-1005</code>).</li>
+    <li>Enter <strong>First Name</strong>, <strong>Last Name</strong>, <strong>Age</strong>, select <strong>Gender</strong>, and choose <strong>Blood Group</strong>.</li>
+    <li>Provide <strong>Contact Phone</strong>, <strong>Email Address</strong>, <strong>Residential Address</strong>, and <strong>Emergency Contact</strong>.</li>
+    <li>Enter any known chronic conditions or allergies in <strong>Medical History</strong>.</li>
+    <li>Click <strong><span class="step-badge">2</span> Complete Registration</strong>. The system saves the patient via Spring JDBC and opens the comprehensive 360-degree patient profile.</li>
+</ol>
+
+<h2>6.3 How to Record a Doctor Consultation</h2>
+<ol>
+    <li>Click <strong>Consultations</strong> &rarr; <strong><span class="step-badge">1</span> Record New Consultation</strong> (or click <em>Add Consultation</em> directly from the patient's profile).</li>
+    <li>Select the <strong>Patient</strong> from the dropdown list.</li>
+    <li>Select the <strong>Attending Doctor</strong> (e.g., <em>Dr. Rajesh Sharma - Cardiologist</em>). Notice the consultation fee automatically updates to the doctor's standard rate.</li>
+    <li>Fill in <strong>Chief Symptoms</strong> (e.g. <em>Chest pain and breathlessness</em>).</li>
+    <li>Enter the <strong>Clinical Diagnosis</strong> (e.g. <em>Mild Angina Pectoris</em>).</li>
+    <li>Type the <strong>Prescription &amp; Medication Advice</strong> (e.g. <em>Tab Sorbitrate 5mg SOS</em>).</li>
+    <li>Click <strong><span class="step-badge">2</span> Save Consultation Record</strong>.</li>
+</ol>
+
+<h2>6.4 How to Order &amp; Report Laboratory Tests</h2>
+<ol>
+    <li>Click <strong>Laboratory</strong> &rarr; <strong><span class="step-badge">1</span> Order Laboratory Test</strong>.</li>
+    <li>Select the <strong>Patient</strong> and select the <strong>Diagnostic Test</strong> from the catalog (e.g., <em>Lipid Profile</em> or <em>Chest X-Ray</em>). The investigation fee auto-populates.</li>
+    <li>Select the <strong>Referring Doctor</strong> (optional) and click <strong><span class="step-badge">2</span> Confirm &amp; Place Order</strong>.</li>
+    <li>To enter test results when ready: Locate the order in the table &rarr; Click the <strong><i class="fa-solid fa-pen-nib"></i> Edit Result</strong> button &rarr; Enter findings in the modal (e.g., <em>Cholesterol: 210 mg/dL, Triglycerides: 175 mg/dL</em>) &rarr; Set status to <code>COMPLETED</code> &rarr; Click <strong>Save Result</strong>.</li>
+</ol>
+
+<h2>6.5 How to Generate a Consolidated Hospital Bill</h2>
+<ol>
+    <li>Click <strong>Billing &amp; Invoices</strong> &rarr; <strong><span class="step-badge">1</span> Generate New Patient Bill</strong>.</li>
+    <li>Select the patient and click <strong>Proceed to Billing Details</strong>.</li>
+    <li>The system automatically aggregates all unbilled consultations and lab orders for that patient into an itemized tariff breakdown.</li>
+    <li>Review or adjust charges: Consultation, Lab, Room/Bed, Pharmacy, or Service fees.</li>
+    <li>Enter any applicable <strong>Discount (%)</strong> and review the calculated <strong>GST Tax (%)</strong>. The live JavaScript calculator instantly displays the updated Grand Total.</li>
+    <li>Enter the <strong>Amount Received Now</strong> (deposit) and choose the <strong>Payment Mode</strong> (Cash, UPI, Card, Insurance).</li>
+    <li>Click <strong><span class="step-badge">2</span> Generate &amp; Issue Invoice</strong>.
+        <br><em>At this exact moment, Spring AOP intercepts the method, verifies execution latency, logs operational details, and stores the audit record into the database.</em>
+    </li>
+</ol>
+
+<h2>6.6 How to Print Tax Invoice &amp; Settle Balance Payments</h2>
+<ol>
+    <li>The generated invoice opens immediately at <code>/billing/invoice/{billNumber}</code>.</li>
+    <li>Click <strong><span class="step-badge">1</span> Print Tax Invoice</strong> to trigger clean browser printing with hospital header, GSTIN, and itemized billing lines.</li>
+    <li>If an outstanding balance remains, click <strong><span class="step-badge">2</span> Record Payment Settlement</strong>, enter the payment amount, select the payment mode (UPI, Cash, etc.), and confirm. The balance updates to zero and status transitions to <code>PAID</code>.</li>
+</ol>
+
+<h2>6.7 How to Monitor Spring AOP Audit &amp; Performance Telemetry</h2>
+<ol>
+    <li>Click <strong>AOP Monitor</strong> in the navigation bar (or visit <code>/aop-monitor</code>).</li>
+    <li><strong>Left Table (AOP Billing Audit Trail):</strong> Inspect the audit log table recording every invoice creation and payment settlement with timestamp, actor, entity ID, and financial breakdown.</li>
+    <li><strong>Right Table (Service Latency Monitor):</strong> Inspect execution time in milliseconds for every service method invoked. Methods executing beyond the configured threshold (e.g. 20ms) are flagged with warning badges.</li>
+</ol>
+
+<!-- ECLIPSE IDE SETUP SECTION -->
+<div class="page-break"></div>
+<h1>7. Eclipse IDE Setup, Import &amp; Execution Manual</h1>
+
+<h2>7.1 Pre-Requisites</h2>
+<ul>
+    <li><strong>Java Development Kit:</strong> JDK 17 LTS (Java 17 is verified on this machine).</li>
+    <li><strong>IDE:</strong> Eclipse IDE for Enterprise Java and Web Developers (2022, 2023, or 2024 edition).</li>
+    <li><strong>Embedded Tools:</strong> Eclipse comes with embedded Maven (m2e) and Lemminx XML tooling.</li>
+</ul>
+
+<h2>7.2 Step-by-Step Import in Eclipse</h2>
+<p>
+The project includes pre-configured Eclipse project descriptor files (<code>.project</code>, <code>.classpath</code>, and <code>.settings/</code>) so that importing produces zero setup errors:
+</p>
+<ol>
+    <li>Launch **Eclipse IDE**.</li>
+    <li>Select your active workspace directory:
+        <br><code>D:\MCA\java-practical</code>
+    </li>
+    <li>From the top menu, click <strong>File</strong> &rarr; <strong>Import...</strong></li>
+    <li>In the import wizard, expand the <strong>Maven</strong> folder &rarr; select <strong>Existing Maven Projects</strong> &rarr; click <strong>Next</strong>.</li>
+    <li>Click the <strong>Browse...</strong> button and navigate to:
+        <br><code>D:\MCA\java-practical\java-mini</code>
+    </li>
+    <li>Ensure the checkbox next to <code>pom.xml</code> (<code>com.hospital:HospitalBillingSystem:1.0.0:war</code>) is selected.</li>
+    <li>Click <strong>Finish</strong>. Eclipse m2e will scan dependencies and configure the project build path.</li>
+</ol>
+
+<h2>7.3 Running the Application inside Eclipse</h2>
+<ol>
+    <li>In Eclipse <strong>Project Explorer</strong>, expand the folder hierarchy:
+        <br><code>java-mini</code> &rarr; <code>src/main/java</code> &rarr; <code>com.hospital</code>
+    </li>
+    <li>Locate the main class:
+        <br><code>HospitalBillingApplication.java</code>
+    </li>
+    <li><strong>Right-click</strong> on <code>HospitalBillingApplication.java</code> &rarr; select <strong>Run As</strong> &rarr; <strong>Java Application</strong> (or <strong>Spring Boot App</strong> if Spring Tools suite is installed).</li>
+    <li>Observe the Eclipse Console output. Spring Boot 3 will initialize the embedded Tomcat server on port <code>8080</code>:
+<pre><code>2026-10-16T23:08:59.079+05:30  INFO 21272 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration: H2 console available at '/h2-console'
+2026-10-16T23:08:59.187+05:30  INFO 21272 --- [main] c.h.HospitalBillingApplicationTests: Started in 3.31 seconds</code></pre>
+    </li>
+    <li>Open your web browser and navigate to: <code>http://localhost:8080/</code></li>
+</ol>
+
+<h2>7.4 Alternative Startup Methods</h2>
+<ul>
+    <li><strong>One-Click Batch Execution:</strong> Double-click the included <code>run.bat</code> file located at <code>D:\MCA\java-practical\java-miniun.bat</code>.</li>
+    <li><strong>Command-Line Maven:</strong> Open PowerShell or Command Prompt in the project directory and run:
+        <br><code>& "D:\MCA\java-practicalpache-maven-3.9.6in\mvn.cmd" spring-boot:run</code>
+    </li>
+</ul>
+
+<!-- VERIFICATION & TESTING SECTION -->
+<div class="page-break"></div>
+<h1>8. Verification, Testing &amp; Quality Assurance Report</h1>
+
+<h2>8.1 Automated Test Suite (<code>HospitalBillingApplicationTests.java</code>)</h2>
+<p>
+The project includes a comprehensive Spring Boot integration test suite validating:
+</p>
+<ol>
+    <li><strong>Context Initialization:</strong> Confirms all DAOs, services, and AOP aspects instantiate properly.</li>
+    <li><strong>Patient Registration Pipeline:</strong> Validates automatic UHID assignment and database persistence.</li>
+    <li><strong>Consolidated Billing Calculation:</strong> Verifies aggregation of consultation and laboratory fees, tax and discount computations.</li>
+    <li><strong>AOP Billing Audit Verification:</strong> Asserts that <code>BillingAuditAspect</code> interceptor increments audit log counts in <code>audit_logs</code> table.</li>
+    <li><strong>AOP Latency Telemetry Verification:</strong> Asserts that <code>ServicePerformanceAspect</code> records method execution durations in <code>performance_logs</code> table.</li>
+</ol>
+
+<h2>8.2 Maven Build &amp; Execution Output</h2>
+<div class="callout callout-success">
+    <div class="callout-title">Maven Test Execution Result: BUILD SUCCESS</div>
+<pre><code>[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.hospital.HospitalBillingApplicationTests
+2026-10-16T23:09:00.395+05:30  WARN 21272 --- [main] c.hospital.aop.ServicePerformanceAspect  : [AOP MONITOR] SLOW SERVICE ALERT: PatientServiceImpl.registerPatient executed in 27 ms (Threshold: 20 ms)
+2026-10-16T23:09:00.409+05:30 DEBUG 21272 --- [main] c.hospital.aop.ServicePerformanceAspect  : [AOP MONITOR] BillingServiceImpl.prepareDraftBill executed in 9 ms
+2026-10-16T23:09:00.417+05:30 DEBUG 21272 --- [main] c.hospital.aop.ServicePerformanceAspect  : [AOP MONITOR] BillingServiceImpl.generateBill executed in 4 ms
+2026-10-16T23:09:00.418+05:30  INFO 21272 --- [main] com.hospital.aop.BillingAuditAspect      : [AOP AUDIT] >>> BILLING OPERATION: BILL_GENERATED | Generated Invoice [BILL-2026-0003] for Patient UHID: UHID-1005 (Vikram Malhotra). Total: Rs. 1207.50, Paid: Rs. 500.00, Balance: Rs. 707.50, Status: PARTIAL
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.021 s -- in com.hospital.HospitalBillingApplicationTests
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------</code></pre>
+</div>
+
+<h2>8.3 Packaging &amp; Distribution Artifacts</h2>
+<p>
+The project has been packaged as a production-grade Web Application Archive (WAR):
+<br><code>D:\MCA\java-practical\java-mini	arget\HospitalBillingSystem-1.0.0.war</code> (Size: ~45 MB).
+<br>This WAR can be deployed either onto standalone servlet containers (such as Apache Tomcat 10+), or executed standalone using Spring Boot's embedded Tomcat engine.
+</p>
+
+<div style="margin-top: 40px; padding-top: 15px; border-top: 2px solid #e2e8f0; text-align: center; color: #64748b; font-size: 8.5pt;">
+    <strong>LifeCare Hospital &amp; Medical Research Institute</strong> &bull; Department of Information Technology &bull; 2026
+</div>
+
+</body>
+</html>
